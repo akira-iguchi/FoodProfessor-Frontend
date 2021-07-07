@@ -8,5 +8,12 @@ module.exports = {
     extend: {},
   },
   plugins: [],
-  important: true,
+  theme: {
+    colors: {
+      orange: '#ef9937',
+      darkRed: '#9a2719',
+      lightGreen: '#92C031',
+      brown: '#775424',
+    },
+  },
 }

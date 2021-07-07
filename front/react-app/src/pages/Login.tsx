@@ -56,7 +56,7 @@ const Login: React.FC = () => {
     <>
       <form noValidate autoComplete="off">
         <Card className="px-10 py-2 max-w-xl text-center">
-          <CardHeader className="text-center" title="ログイン" />
+          <CardHeader title="ログイン" />
           <CardContent>
             <TextField
               className="mb-8"

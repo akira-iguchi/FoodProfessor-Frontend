@@ -9,7 +9,7 @@ import CardHeader from '@material-ui/core/CardHeader'
 
 import { AuthContext } from 'App'
 import { register } from 'lib/api/auth'
-import { RegisterParams } from 'types/index'
+import { RegisterParams } from 'types/auth'
 
 // サインアップ用ページ
 const Register: React.FC = () => {

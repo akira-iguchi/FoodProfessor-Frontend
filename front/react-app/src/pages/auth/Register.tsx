@@ -48,7 +48,7 @@ const Register: React.FC = () => {
         setIsLoggedIn(true)
         setCurrentUser(res.data.data)
 
-        history.push('/')
+        history.push('/top')
 
         console.log('Signed in successfully!')
       }

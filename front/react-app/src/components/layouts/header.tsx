@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { useHistory, Link } from 'react-router-dom'
 import Cookies from 'js-cookie'
 
@@ -7,13 +7,25 @@ import { Logout } from 'lib/api/auth'
 import { AuthContext } from 'App'
 
 import MainLogo from 'images/logo.png'
+import DefaultIcon from 'images/defaultIcon.png'
 import SearchForm from 'components/layouts/SearchForm'
 
 const Header: React.FC = () => {
-  const { loading, isLoggedIn, setIsLoggedIn } = useContext(AuthContext)
+  const { loading, currentUser, isLoggedIn, setIsLoggedIn } = useContext(AuthContext)
+  const [isOpenUserMenu, setIsOpenUserMenu] = useState<boolean>(false)
   const history = useHistory()
 
-  const handleLogout = async (e: React.MouseEvent<HTMLButtonElement>) => {
+  const changeOpenUserMenu = () => {
+    setIsOpenUserMenu(!isOpenUserMenu)
+  }
+
+  // windowのクリックでuserMenu閉じる
+  window.addEventListener('click', (e: any) => {
+    if (e.target.id === 'userIcon' || e.target.id === 'userMenu') return
+    setIsOpenUserMenu(false)
+  })
+
+  const handleLogout = async () => {
     try {
       const res = await Logout()
 
@@ -25,10 +37,6 @@ const Header: React.FC = () => {
 
         setIsLoggedIn(false)
         history.push('/top')
-
-        console.log('Succeeded in sign out')
-      } else {
-        console.log('Failed in sign out')
       }
     } catch (err) {
       console.log(err)
@@ -36,22 +44,54 @@ const Header: React.FC = () => {
   }
 
   const AuthButtons = () => {
-    // 認証完了後はサインアウト用のボタンを表示
-    // 未認証時は認証用のボタンを表示
+    // 認証時によってボタン変更
     if (!loading) {
       if (isLoggedIn) {
         return (
-          <button className="mt-4 mr-3 text-lg text-brown font-bold" onClick={handleLogout}>
-            ログアウト
-          </button>
+          <div className="flex">
+            <Link to="#" className="mt-4 mr-8 text-lg text-darkRed font-bold">
+              マイレシピ
+            </Link>
+            <Link to="#" className="mt-4 mr-8 text-lg text-darkRed font-bold">
+              レシピ登録
+            </Link>
+            <Link to="#" className="mt-4 mr-8 text-lg text-darkRed font-bold">
+              カテゴリ一覧
+            </Link>
+            <img
+              // プロフィール画像が存在しないならデフォルト画像表示
+              src={currentUser?.profile_image ? currentUser?.profile_image : DefaultIcon}
+              className="w-16 h-16 mr-4 cursor-pointer"
+              id="userIcon"
+              alt="icon"
+              onClick={changeOpenUserMenu}
+            />
+            <div
+              className="absolute top-20 right-0 w-40 h-32 px-4 bg-white border-4 rounded-xl border-orange z-10"
+              id="userMenu"
+              style={{ display: isOpenUserMenu ? '' : 'none' }}
+            >
+              <Link to="#" className="inline-block mt-2 pb-2 w-full text-md text-center border-b-2 border-orange">
+                マイページ
+              </Link>
+              <br />
+              <Link to="#" className="inline-block mt-2 pb-2 w-full text-md text-center border-b-2 border-orange">
+                設定
+              </Link>
+              <br />
+              <button className="mt-2 mb-2 ml-5 text-md text-center" onClick={handleLogout}>
+                ログアウト
+              </button>
+            </div>
+          </div>
         )
       } else {
         return (
           <div className="flex">
-            <Link to="/login" className="mt-4 mr-4 text-lg text-brown font-bold">
+            <Link to="/login" className="mt-4 mr-4 text-lg text-darkRed font-bold">
               ログイン
             </Link>
-            <Link to="/register" className="mt-4 mr-3 text-lg text-brown font-bold">
+            <Link to="/register" className="mt-4 mr-3 text-lg text-darkRed font-bold">
               会員登録
             </Link>
           </div>

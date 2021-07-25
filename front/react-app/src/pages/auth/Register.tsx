@@ -36,7 +36,6 @@ const Register: React.FC = () => {
 
     try {
       const res = await register(params)
-      console.log(res)
 
       if (res.status === 200) {
         // アカウント作成と同時にログイン
@@ -48,8 +47,6 @@ const Register: React.FC = () => {
         setCurrentUser(res.data.data)
 
         history.push('/top')
-
-        console.log('Signed in successfully!')
       }
     } catch (err) {
       console.log(err)

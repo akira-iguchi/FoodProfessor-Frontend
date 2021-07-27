@@ -113,7 +113,6 @@ const Register: React.FC = () => {
             />
             <button
               type="submit"
-              disabled={!firstName || !lastName || !email || !password || !passwordConfirmation ? true : false}
               className="mt-8 mb-4 px-10 py-2 rounded-full bg-lightGreen text-white"
               onClick={handleSubmit}
             >

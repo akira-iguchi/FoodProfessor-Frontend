@@ -8,7 +8,7 @@ import { AuthContext } from 'App'
 
 import MainLogo from 'images/logo.png'
 import DefaultIcon from 'images/defaultIcon.png'
-import SearchForm from 'components/layouts/SearchForm'
+import SearchForm from 'components/commons/SearchForm'
 
 const Header: React.FC = () => {
   const { loading, currentUser, isLoggedIn, setIsLoggedIn } = useContext(AuthContext)

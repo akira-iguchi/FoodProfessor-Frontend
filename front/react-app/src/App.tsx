@@ -1,7 +1,7 @@
 import React, { useState, useEffect, createContext } from 'react'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 
-import CommonLayout from 'components/layouts/CommonLayout'
+import CommonLayout from 'components/commons/CommonLayout'
 import Top from 'pages/Top'
 import Register from 'pages/auth/Register'
 import Login from 'pages/auth/Login'

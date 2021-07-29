@@ -16,6 +16,12 @@ module.exports = {
       lightGreen: '#92C031',
       brown: '#775424',
     },
+    screens: {
+      maxXl: { max: '1280px' },
+      maxLg: { max: '1024px' },
+      maxMd: { max: '768px' },
+      maxSm: { max: '640px' },
+    },
   },
   important: true,
 }

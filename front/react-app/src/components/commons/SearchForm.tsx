@@ -13,11 +13,21 @@ const SearchForm: React.FC = () => {
         </button>
       </div>
       <div className="flex mt-1.5">
-        <span className="mr-2 py-1 px-3 bg-brown rounded-xl text-xs text-center text-orange">にんじん</span>
-        <span className="mr-2 py-1 px-3 bg-brown rounded-xl text-xs text-center text-orange">にんじん</span>
-        <span className="mr-2 py-1 px-3 bg-brown rounded-xl text-xs text-center text-orange">にんじん</span>
-        <span className="mr-2 py-1 px-3 bg-brown rounded-xl text-xs text-center text-orange">にんじん</span>
-        <span className="mr-2 py-1 px-3 bg-brown rounded-xl text-xs text-center text-orange">じゃがいも</span>
+        <span className="h-6 mr-2 py-1 px-3 whitespace-nowrap bg-brown rounded-xl text-xs text-center text-orange">
+          にんじん
+        </span>
+        <span className="h-6 mr-2 py-1 px-3 whitespace-nowrap bg-brown rounded-xl text-xs text-center text-orange">
+          にんじん
+        </span>
+        <span className="h-6 mr-2 py-1 px-3 whitespace-nowrap bg-brown rounded-xl text-xs text-center text-orange">
+          にんじん
+        </span>
+        <span className="h-6 mr-2 py-1 px-3 whitespace-nowrap bg-brown rounded-xl text-xs text-center text-orange">
+          にんじん
+        </span>
+        <span className="h-6 mr-2 py-1 px-3 whitespace-nowrap bg-brown rounded-xl text-xs text-center text-orange">
+          じゃがいも
+        </span>
       </div>
     </form>
   )

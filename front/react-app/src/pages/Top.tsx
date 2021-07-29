@@ -1,18 +1,15 @@
-import React, { useEffect, useReducer, useContext } from 'react'
+import React, { useEffect, useContext } from 'react'
 
 import { AuthContext } from 'App'
-import { initialState, topActionTypes, topReducer } from 'reducers/top'
 import { fetchTopData } from 'lib/apis/top'
 
 // とりあえず認証済みユーザーの名前やメールアドレスを表示
 const Top: React.FC = () => {
   const { isLoggedIn, currentUser } = useContext(AuthContext)
-  const [state, dispatch] = useReducer(topReducer, initialState)
 
   useEffect(() => {
-    dispatch({ type: topActionTypes.FETCHING })
-    fetchTopData().then((data) => console.log(data))
-  }, [])
+    fetchTopData()
+  })
 
   return (
     <>

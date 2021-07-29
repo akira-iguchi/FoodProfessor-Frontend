@@ -1,8 +1,8 @@
-import axios from 'axios'
+import client from 'lib/apis/client'
 import { topPageUrl } from 'urls/index'
 
 export const fetchTopData = () => {
-  return axios
+  return client
     .get(topPageUrl)
     .then((res) => {
       return res.data

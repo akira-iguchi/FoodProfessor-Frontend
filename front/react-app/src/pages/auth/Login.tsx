@@ -10,7 +10,7 @@ import CardHeader from '@material-ui/core/CardHeader'
 import Box from '@material-ui/core/Box'
 
 import { AuthContext } from 'App'
-import { login } from 'lib/api/auth'
+import { login } from 'lib/apis/auth'
 import { LoginParams } from 'types/auth'
 
 // サインイン用ページ

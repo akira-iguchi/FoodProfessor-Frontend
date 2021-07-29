@@ -1,4 +1,4 @@
-import client from 'lib/api/client'
+import client from 'lib/apis/client'
 import Cookies from 'js-cookie'
 import { registerUrl, loginUrl, logOutUrl, sessionsUrl } from 'urls/index'
 

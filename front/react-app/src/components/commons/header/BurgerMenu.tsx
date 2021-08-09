@@ -1,16 +1,19 @@
 import React, { useContext, useState } from 'react'
 import { useHistory, Link } from 'react-router-dom'
+
 import Cookies from 'js-cookie'
-
 import { Logout } from 'lib/apis/auth'
-
 import { AuthContext } from 'App'
 
-import MainLogo from 'images/logo.png'
 import DefaultIcon from 'images/defaultIcon.png'
-import SearchForm from 'components/commons/SearchForm'
+import { slide as Menu } from 'react-burger-menu'
 
-const Header: React.FC = () => {
+type BurgerMenuProps = {
+  pageWrapId: string
+  outerContainerId: string
+}
+
+const BurgerMenu: React.FC<BurgerMenuProps> = (props) => {
   const { loading, currentUser, isLoggedIn, setIsLoggedIn } = useContext(AuthContext)
   const [isOpenUserMenu, setIsOpenUserMenu] = useState<boolean>(false)
   const history = useHistory()
@@ -43,19 +46,19 @@ const Header: React.FC = () => {
     }
   }
 
-  const AuthButtons = () => {
+  const AuthMenuItems = () => {
     // 認証時によってボタン変更
     if (!loading) {
       if (isLoggedIn) {
         return (
-          <div className="flex">
-            <Link to="#" className="mt-4 mr-8 text-lg text-darkRed font-bold">
+          <div>
+            <Link to="#" className="bm-item menu-item">
               マイレシピ
             </Link>
-            <Link to="#" className="mt-4 mr-8 text-lg text-darkRed font-bold">
+            <Link to="#" className="bm-item menu-item">
               レシピ登録
             </Link>
-            <Link to="#" className="mt-4 mr-8 text-lg text-darkRed font-bold">
+            <Link to="#" className="bm-item menu-item">
               カテゴリ一覧
             </Link>
             <img
@@ -67,7 +70,7 @@ const Header: React.FC = () => {
               onClick={changeOpenUserMenu}
             />
             <div
-              className="absolute top-20 right-0 w-40 h-32 px-4 bg-white border-4 rounded-xl border-orange z-10"
+              className="relative top-2 right-0 w-40 h-36 px-4 bg-white border-4 rounded-xl border-orange z-10"
               id="userMenu"
               style={{ display: isOpenUserMenu ? '' : 'none' }}
             >
@@ -87,11 +90,11 @@ const Header: React.FC = () => {
         )
       } else {
         return (
-          <div className="flex">
-            <Link to="/login" className="mt-4 mr-4 text-lg text-darkRed font-bold">
+          <div>
+            <Link to="/login" className="bm-item menu-item">
               ログイン
             </Link>
-            <Link to="/register" className="mt-4 mr-3 text-lg text-darkRed font-bold">
+            <Link to="/register" className="bm-item menu-item">
               会員登録
             </Link>
           </div>
@@ -103,20 +106,10 @@ const Header: React.FC = () => {
   }
 
   return (
-    <div className="flex w-full h-20 bg-orange">
-      <div className="relative top-2 left-2 w-32 h-32">
-        <Link to="/top">
-          <img src={MainLogo} alt="main logo" />
-        </Link>
-      </div>
-
-      <SearchForm />
-
-      <div className="relative top-2 ml-auto mr-2">
-        <AuthButtons />
-      </div>
-    </div>
+    <Menu {...props}>
+      <AuthMenuItems />
+    </Menu>
   )
 }
 
-export default Header
+export default BurgerMenu

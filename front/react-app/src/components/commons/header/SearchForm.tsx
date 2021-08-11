@@ -2,7 +2,7 @@ import React from 'react'
 
 const SearchForm: React.FC = () => {
   return (
-    <form className="relative top-2 left-12">
+    <form className="relative top-2 left-6 maxSm:hidden">
       <div className="flex">
         <section className="w-24 h-9 bg-darkRed text-orange">
           <p className="relative top-2.5 w-18 h-9 text-xs font-w6 text-center text-yellow-400">他ユーザー 🔽</p>

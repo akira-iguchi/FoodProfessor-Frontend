@@ -29,7 +29,7 @@ const Top: React.FC = () => {
         <span className="font-bold text-orange">最近追加したレシピ</span>
       </p>
 
-      <div className="grid grid-cols-4 gap-4">
+      <div className="grid grid-cols-5 maxXl:grid-cols-4 maxMd:grid-cols-3 maxSm:grid-cols-2 gap-4">
         {recentRecipes ? (
           recentRecipes.map((recipe: Recipe) => (
             <RecipeCards

@@ -6,21 +6,21 @@ import defaultRecipeImage from 'images/defaultRecipe.png'
 
 const RecipeCard: React.FC<Recipe> = (props: Recipe) => {
   return (
-    <>
-      <div>
+    <div>
+      <Link to="#">
         {props.recipeImage ? (
           <img
             // レシピ画像が存在しないならデフォルト画像表示
             src={props.recipeImage.url ? props.recipeImage.url : defaultRecipeImage}
-            className="w-full max-h-60 mb-2 cursor-pointer border-2 border-orange"
+            className="max-w-48 max-h-48 mr-auto ml-auto mb-2 border-2 border-orange hover:no-underline"
             alt="recipeImage"
           />
         ) : (
           <></>
         )}
-      </div>
-      <p className="text-2xl font-w6 text-center">{props.recipeName}</p>
-    </>
+        <p className="text-2xl font-w6 text-center">{props.recipeName}</p>
+      </Link>
+    </div>
   )
 }
 

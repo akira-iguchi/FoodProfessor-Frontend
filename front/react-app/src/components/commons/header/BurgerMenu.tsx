@@ -23,17 +23,18 @@ const BurgerMenu: React.FC<BurgerMenuProps> = (props: BurgerMenuProps) => {
   const [isOpenBurgerUserMenu, setIsOpenBurgerUserMenu] = useState<boolean>(false)
   const history = useHistory()
 
+  // ユーザーメニュー表示切り替え
   const changeOpenUserMenu = (): void => {
     setIsOpenBurgerUserMenu(!isOpenBurgerUserMenu)
   }
 
+  // 画面クリックでユーザーメニュー非表示
   window.addEventListener('click', (e: any): void => {
     if (e.target.id === 'userIcon' || e.target.id === 'userMenu') return
     setIsOpenBurgerUserMenu(false)
   })
 
-  // -------メニューアイテム（ユーザーアイコン以外）クリックでメニュー＆ユーザーメニュー閉じる--------
-
+  // -------バーガーメニューのアイテムクリックでバーガーメニュー＆ユーザーメニュー閉じる--------
   const closeBurgerMenu = (): void => {
     setIsOpenBurgerMenu(false)
 
@@ -44,10 +45,9 @@ const BurgerMenu: React.FC<BurgerMenuProps> = (props: BurgerMenuProps) => {
   const BurgerMenuStateChange = (state: BurgerMenuState): void => {
     setIsOpenBurgerMenu(state.isOpen)
   }
+  // ------------------------------------------------------------------------------------
 
-  // ---------------------------------------------------------------------------------------
-
-  // ログアウトと同時にメニュー閉じる(handleLogoutが２つあって不満)
+  // ログアウトと同時にバーガーメニュー閉じる(Frame.tsxにもhandleLogoutがあって不満)
   const logout = (): void => {
     handleLogout()
     closeBurgerMenu()
@@ -99,6 +99,7 @@ const BurgerMenu: React.FC<BurgerMenuProps> = (props: BurgerMenuProps) => {
               <></>
             )}
             <div
+              // isOpenBurgerUserMenuがtrueかfalseかで表示切り替え
               className="relative top-2 right-0 w-40 h-36 px-4 bg-white border-4 rounded-xl border-orange"
               id="userMenu"
               style={{ display: isOpenBurgerUserMenu ? '' : 'none' }}
@@ -143,7 +144,12 @@ const BurgerMenu: React.FC<BurgerMenuProps> = (props: BurgerMenuProps) => {
   }
 
   return (
-    <Menu {...props} isOpen={isOpenBurgerMenu} onStateChange={(state) => BurgerMenuStateChange(state)}>
+    <Menu
+      {...props}
+      isOpen={isOpenBurgerMenu}
+      // state変更でユーザーメニュー非表示
+      onStateChange={(state) => BurgerMenuStateChange(state)}
+    >
       <AuthMenuItems />
     </Menu>
   )

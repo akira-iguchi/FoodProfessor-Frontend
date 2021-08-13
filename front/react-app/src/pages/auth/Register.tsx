@@ -11,7 +11,6 @@ import { AuthContext } from 'App'
 import { register } from 'lib/apis/auth'
 import { RegisterParams } from 'types/auth'
 
-// サインアップ用ページ
 const Register: React.FC = () => {
   const history = useHistory()
 

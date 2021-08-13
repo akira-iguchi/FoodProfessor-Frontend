@@ -15,11 +15,12 @@ const Header: React.FC = () => {
   const [isOpenUserMenu, setIsOpenUserMenu] = useState<boolean>(false)
   const history = useHistory()
 
+  // ユーザーメニュー表示切り替え
   const changeOpenUserMenu = (): void => {
     setIsOpenUserMenu(!isOpenUserMenu)
   }
 
-  // windowのクリックでuserMenu閉じる
+  // 画面クリックでユーザーメニュー非表示
   window.addEventListener('click', (e: any): void => {
     if (e.target.id === 'userIcon' || e.target.id === 'userMenu') return
     setIsOpenUserMenu(false)

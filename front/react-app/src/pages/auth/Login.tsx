@@ -13,7 +13,6 @@ import { AuthContext } from 'App'
 import { login } from 'lib/apis/auth'
 import { LoginParams } from 'types/auth'
 
-// サインイン用ページ
 const Login: React.FC = () => {
   const history = useHistory()
 

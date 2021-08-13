@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react'
+import { Link } from 'react-router-dom'
 
 import { fetchTopData } from 'lib/apis/top'
 
@@ -73,6 +74,18 @@ const Top: React.FC = () => {
       <p className="w-40 mt-12 mb-4 py-2 text-center bg-darkRed rounded-full">
         <span className="font-bold text-orange">食材一覧</span>
       </p>
+
+      <div>
+        {ingredients ? (
+          ingredients.map((ingredient: Ingredient) => (
+            <Link to="#" key={ingredient.id} className="font-w6 mb-1 block">
+              {ingredient.ingredientName}
+            </Link>
+          ))
+        ) : (
+          <></>
+        )}
+      </div>
     </>
   )
 }

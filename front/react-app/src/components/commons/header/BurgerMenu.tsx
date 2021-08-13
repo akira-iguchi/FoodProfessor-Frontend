@@ -1,11 +1,11 @@
-import React, { useContext, useState, useEffect } from 'react'
+import React, { useContext, useState } from 'react'
 import { useHistory, Link } from 'react-router-dom'
 
 import Cookies from 'js-cookie'
 import { Logout } from 'lib/apis/auth'
 import { AuthContext } from 'App'
 
-import SearchForm from 'components/commons/header/SearchForm'
+// import SearchForm from 'components/commons/header/SearchForm'
 import DefaultIcon from 'images/defaultIcon.png'
 import { slide as Menu } from 'react-burger-menu' // react-burger-menuというパッケージ
 
@@ -17,7 +17,7 @@ type BurgerMenuState = {
   isOpen: boolean
 }
 
-const BurgerMenu: React.FC<BurgerMenuProps> = (props) => {
+const BurgerMenu: React.FC<BurgerMenuProps> = (props: BurgerMenuProps) => {
   const { loading, currentUser, isLoggedIn, setIsLoggedIn } = useContext(AuthContext)
   const [isOpenBurgerMenu, setIsOpenBurgerMenu] = useState<boolean>(false)
   const [isOpenBurgerUserMenu, setIsOpenBurgerUserMenu] = useState<boolean>(false)
@@ -76,7 +76,7 @@ const BurgerMenu: React.FC<BurgerMenuProps> = (props) => {
     if (!loading) {
       if (isLoggedIn) {
         return (
-          <div>
+          <>
             <Link to="#" className="bm-item menu-item" onClick={closeBurgerMenu}>
               マイレシピ
             </Link>
@@ -86,14 +86,18 @@ const BurgerMenu: React.FC<BurgerMenuProps> = (props) => {
             <Link to="#" className="bm-item menu-item" onClick={closeBurgerMenu}>
               カテゴリ一覧
             </Link>
-            <img
-              // プロフィール画像が存在しないならデフォルト画像表示
-              src={currentUser?.profile_image ? currentUser?.profile_image : DefaultIcon}
-              className="w-16 h-16 mr-4 cursor-pointer"
-              id="userIcon"
-              alt="icon"
-              onClick={changeOpenUserMenu}
-            />
+            {currentUser?.profileImage ? (
+              <img
+                // プロフィール画像が存在しないならデフォルト画像表示
+                src={currentUser?.profileImage.url ? currentUser?.profileImage.url : DefaultIcon}
+                className="w-16 h-16 mr-4 cursor-pointer"
+                id="userIcon"
+                alt="icon"
+                onClick={changeOpenUserMenu}
+              />
+            ) : (
+              <></>
+            )}
             <div
               className="relative top-2 right-0 w-40 h-36 px-4 bg-white border-4 rounded-xl border-orange"
               id="userMenu"
@@ -119,18 +123,18 @@ const BurgerMenu: React.FC<BurgerMenuProps> = (props) => {
                 ログアウト
               </button>
             </div>
-          </div>
+          </>
         )
       } else {
         return (
-          <div>
+          <>
             <Link to="/login" className="bm-item menu-item" onClick={closeBurgerMenu}>
               ログイン
             </Link>
             <Link to="/register" className="bm-item menu-item" onClick={closeBurgerMenu}>
               会員登録
             </Link>
-          </div>
+          </>
         )
       }
     } else {

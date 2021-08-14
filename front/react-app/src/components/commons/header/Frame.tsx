@@ -76,7 +76,10 @@ const Header: React.FC = () => {
               id="userMenu"
               style={{ display: isOpenUserMenu ? '' : 'none' }}
             >
-              <Link to="#" className="inline-block mt-2 pb-2 w-full text-md text-center border-b-2 border-orange">
+              <Link
+                to={'/users/' + currentUser?.id}
+                className="inline-block mt-2 pb-2 w-full text-md text-center border-b-2 border-orange"
+              >
                 マイページ
               </Link>
               <br />

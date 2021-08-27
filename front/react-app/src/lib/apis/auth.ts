@@ -1,16 +1,15 @@
+import { AxiosPromise } from 'axios'
 import client from 'lib/apis/client'
 import Cookies from 'js-cookie'
 import { registerUrl, loginUrl, logOutUrl, sessionsUrl } from 'urls/index'
 
-import { RegisterParams, LoginParams } from 'types/auth'
-
 // サインアップ（新規アカウント作成）
-export const register = (params: RegisterParams) => {
+export const register = (params: FormData): AxiosPromise => {
   return client.post(registerUrl, params)
 }
 
 // サインイン（ログイン）
-export const login = (params: LoginParams) => {
+export const login = (params: FormData): AxiosPromise => {
   return client.post(loginUrl, params)
 }
 

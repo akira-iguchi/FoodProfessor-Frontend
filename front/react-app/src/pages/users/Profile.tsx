@@ -49,7 +49,7 @@ const Profile: React.FC<any> = ({ match }) => {
 
           {user?.id === currentUser?.id ? (
             <Link
-              to="#"
+              to={`/users/${currentUser?.id}/edit`}
               className="relative top-2 right-2 ml-auto w-40 h-12 px-4 pt-3 rounded whitespace-nowrap text-orange font-bold bg-brown maxSm:pb-4"
             >
               プロフィール編集

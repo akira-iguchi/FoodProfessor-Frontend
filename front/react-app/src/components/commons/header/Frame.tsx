@@ -31,6 +31,7 @@ const Header: React.FC = () => {
       const res = await Logout()
 
       if (res.data.success === true) {
+        window.scrollTo(0, 0)
         // サインアウト時には各Cookieを削除
         Cookies.remove('_access_token')
         Cookies.remove('_client')
@@ -53,7 +54,7 @@ const Header: React.FC = () => {
             <Link to="#" className="mt-4 mr-8 text-lg text-darkRed font-bold">
               マイレシピ
             </Link>
-            <Link to="#" className="mt-4 mr-8 text-lg text-darkRed font-bold">
+            <Link to="/recipes/create" className="mt-4 mr-8 text-lg text-darkRed font-bold">
               レシピ登録
             </Link>
             <Link to="#" className="mt-4 mr-8 text-lg text-darkRed font-bold">

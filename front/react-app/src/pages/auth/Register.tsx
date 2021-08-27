@@ -9,7 +9,6 @@ import CardHeader from '@material-ui/core/CardHeader'
 
 import { AuthContext } from 'App'
 import { register } from 'lib/apis/auth'
-import { RegisterParams } from 'types/auth'
 
 const Register: React.FC = () => {
   const history = useHistory()
@@ -22,16 +21,24 @@ const Register: React.FC = () => {
   const [password, setPassword] = useState<string>('')
   const [passwordConfirmation, setPasswordConfirmation] = useState<string>('')
 
-  const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault()
+  // FormData形式でデータを作成
+  const createFormData = (): FormData => {
+    const formData = new FormData()
 
-    const params: RegisterParams = {
-      firstName: firstName,
-      lastName: lastName,
-      email: email,
-      password: password,
-      passwordConfirmation: passwordConfirmation,
-    }
+    formData.append('firstName', firstName)
+    formData.append('lastName', lastName)
+    formData.append('email', email)
+    formData.append('password', password)
+    formData.append('passwordConfirmation', passwordConfirmation)
+
+    return formData
+  }
+
+  const handleRegister = async (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault()
+    window.scrollTo(0, 0)
+
+    const params = createFormData()
 
     try {
       const res = await register(params)
@@ -112,7 +119,7 @@ const Register: React.FC = () => {
           <button
             type="submit"
             className="mt-8 mb-4 px-10 py-2 rounded-full bg-lightGreen text-white"
-            onClick={handleSubmit}
+            onClick={handleRegister}
           >
             登録
           </button>

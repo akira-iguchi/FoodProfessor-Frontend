@@ -1,14 +1,17 @@
 import React, { useState, useEffect, createContext } from 'react'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom'
 
+import { User } from 'types/user'
+
+import { getCurrentUser } from 'lib/apis/auth'
+
 import CommonLayout from 'components/commons/CommonLayout'
 import Top from 'pages/Top'
 import Register from 'pages/auth/Register'
 import Login from 'pages/auth/Login'
 import Profile from 'pages/users/Profile'
 import EditProfile from 'pages/users/EditProfile'
-import { getCurrentUser } from 'lib/apis/auth'
-import { User } from 'types/user'
+import CreateRecipe from 'pages/recipes/CreateRecipe'
 
 // グローバルで扱う変数・関数
 export const AuthContext = createContext(
@@ -49,7 +52,7 @@ const App: React.FC = () => {
   }, [setCurrentUser])
 
   // ユーザーが認証済みかどうかでルーティングを決定
-  const Private = ({ children }: { children: React.ReactElement }) => {
+  const Private = ({ children }: { children: any }) => {
     if (!loading) {
       if (isLoggedIn) {
         return children
@@ -71,7 +74,8 @@ const App: React.FC = () => {
             <Route exact path="/login" component={Login} />
             <Private>
               <Route exact path="/users/:userId" component={Profile} />
-              <Route exact path="/auth/:userId/edit" component={EditProfile} />
+              <Route exact path="/users/:userId/edit" component={EditProfile} />
+              <Route exact path="/recipes/create" component={CreateRecipe} />
             </Private>
           </Switch>
         </CommonLayout>

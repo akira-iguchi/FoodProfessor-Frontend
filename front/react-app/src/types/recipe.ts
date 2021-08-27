@@ -1,11 +1,9 @@
-type RecipeImage = {
-  url: string | null
-}
-
 export type Recipe = {
   id: number
   recipeName: string
-  recipeImage?: RecipeImage
+  recipeImage?: {
+    url: string
+  }
   recipeTime: number
   userId: number
 }

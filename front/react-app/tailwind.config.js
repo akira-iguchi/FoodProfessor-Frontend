@@ -12,9 +12,13 @@ module.exports = {
     colors: {
       white: '#ffffff',
       orange: '#ef9937',
+      red: '#FF0000',
       darkRed: '#9a2719',
       lightGreen: '#92C031',
       brown: '#775424',
+      alertColor: '#f8d7da',
+      alertTextColor: '#721c24',
+      alertBorderColor: '#f5c6cb',
     },
     screens: {
       maxXl: { max: '1280px' },

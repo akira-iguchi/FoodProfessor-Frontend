@@ -58,6 +58,7 @@ const BurgerMenu: React.FC<BurgerMenuProps> = (props: BurgerMenuProps) => {
       const res = await Logout()
 
       if (res.data.success === true) {
+        window.scrollTo(0, 0)
         // サインアウト時には各Cookieを削除
         Cookies.remove('_access_token')
         Cookies.remove('_client')
@@ -80,7 +81,7 @@ const BurgerMenu: React.FC<BurgerMenuProps> = (props: BurgerMenuProps) => {
             <Link to="#" className="bm-item menu-item" onClick={closeBurgerMenu}>
               マイレシピ
             </Link>
-            <Link to="#" className="bm-item menu-item" onClick={closeBurgerMenu}>
+            <Link to="/recipes/create" className="bm-item menu-item" onClick={closeBurgerMenu}>
               レシピ登録
             </Link>
             <Link to="#" className="bm-item menu-item" onClick={closeBurgerMenu}>
@@ -105,7 +106,7 @@ const BurgerMenu: React.FC<BurgerMenuProps> = (props: BurgerMenuProps) => {
               style={{ display: isOpenBurgerUserMenu ? '' : 'none' }}
             >
               <Link
-                to="#"
+                to={`/users/${currentUser?.id}`}
                 className="inline-block mt-2 pb-2 w-full text-md text-center border-b-2 border-orange"
                 onClick={closeBurgerMenu}
               >

@@ -11,7 +11,6 @@ import Box from '@material-ui/core/Box'
 
 import { AuthContext } from 'App'
 import { login } from 'lib/apis/auth'
-import { LoginParams } from 'types/auth'
 
 const Login: React.FC = () => {
   const history = useHistory()
@@ -21,13 +20,21 @@ const Login: React.FC = () => {
   const [email, setEmail] = useState<string>('')
   const [password, setPassword] = useState<string>('')
 
+  // FormData形式でデータを作成
+  const createFormData = (): FormData => {
+    const formData = new FormData()
+
+    formData.append('email', email)
+    formData.append('password', password)
+
+    return formData
+  }
+
   const postLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
+    window.scrollTo(0, 0)
 
-    const params: LoginParams = {
-      email: email,
-      password: password,
-    }
+    const params = createFormData()
 
     try {
       const res = await login(params)

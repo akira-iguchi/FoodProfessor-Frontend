@@ -74,6 +74,7 @@ const Profile: React.FC<any> = ({ match }) => {
 
         if (res.status === 201) {
           history.push(`/users/${user?.id}`)
+          history.go(0) // ヘッダーのアイコンを更新するためページをリロード
         }
       } catch (err) {
         console.log(err)

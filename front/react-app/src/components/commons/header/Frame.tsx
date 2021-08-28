@@ -6,13 +6,14 @@ import { Logout } from 'lib/apis/auth'
 import { AuthContext } from 'App'
 
 import MainLogo from 'images/logo.png'
-import DefaultIcon from 'images/defaultIcon.png'
+import { DefaultIconUrl } from 'images/defaultIcon'
 import SearchForm from 'components/commons/header/SearchForm'
 import BurgerMenu from 'components/commons/header/BurgerMenu'
 
 const Header: React.FC = () => {
   const { loading, currentUser, isLoggedIn, setIsLoggedIn } = useContext(AuthContext)
   const [isOpenUserMenu, setIsOpenUserMenu] = useState<boolean>(false)
+
   const history = useHistory()
 
   // ユーザーメニュー表示切り替え
@@ -63,8 +64,8 @@ const Header: React.FC = () => {
             {currentUser?.profileImage ? (
               <img
                 // プロフィール画像が存在しないならデフォルト画像表示
-                src={currentUser?.profileImage.url ? currentUser?.profileImage.url : DefaultIcon}
-                className="w-16 h-16 mr-4 cursor-pointer"
+                src={currentUser?.profileImage.url ? currentUser?.profileImage.url : DefaultIconUrl}
+                className="w-16 h-16 mr-4 cursor-pointer rounded-full"
                 id="userIcon"
                 alt="icon"
                 onClick={changeOpenUserMenu}

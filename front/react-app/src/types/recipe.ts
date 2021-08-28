@@ -1,7 +1,7 @@
 export type Recipe = {
   id: number
   recipeName: string
-  recipeImage?: {
+  recipeImage: {
     url: string
   }
   recipeTime: number

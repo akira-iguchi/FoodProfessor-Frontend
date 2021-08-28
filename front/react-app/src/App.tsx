@@ -22,6 +22,7 @@ export const AuthContext = createContext(
     setIsLoggedIn: React.Dispatch<React.SetStateAction<boolean>>
     currentUser: User | undefined
     setCurrentUser: React.Dispatch<React.SetStateAction<User | undefined>>
+    handleGetCurrentUser: any
   }
 )
 
@@ -66,7 +67,9 @@ const App: React.FC = () => {
 
   return (
     <Router>
-      <AuthContext.Provider value={{ loading, setLoading, isLoggedIn, setIsLoggedIn, currentUser, setCurrentUser }}>
+      <AuthContext.Provider
+        value={{ loading, setLoading, isLoggedIn, setIsLoggedIn, currentUser, setCurrentUser, handleGetCurrentUser }}
+      >
         <CommonLayout>
           <Switch>
             <Route exact path="/top" component={Top} />

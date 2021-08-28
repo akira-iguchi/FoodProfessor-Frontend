@@ -5,8 +5,8 @@ import Cookies from 'js-cookie'
 import { Logout } from 'lib/apis/auth'
 import { AuthContext } from 'App'
 
+import { DefaultIconUrl } from 'images/defaultIcon'
 // import SearchForm from 'components/commons/header/SearchForm'
-import DefaultIcon from 'images/defaultIcon.png'
 import { slide as Menu } from 'react-burger-menu' // react-burger-menuというパッケージ
 
 type BurgerMenuProps = {
@@ -21,6 +21,7 @@ const BurgerMenu: React.FC<BurgerMenuProps> = (props: BurgerMenuProps) => {
   const { loading, currentUser, isLoggedIn, setIsLoggedIn } = useContext(AuthContext)
   const [isOpenBurgerMenu, setIsOpenBurgerMenu] = useState<boolean>(false)
   const [isOpenBurgerUserMenu, setIsOpenBurgerUserMenu] = useState<boolean>(false)
+
   const history = useHistory()
 
   // ユーザーメニュー表示切り替え
@@ -90,8 +91,8 @@ const BurgerMenu: React.FC<BurgerMenuProps> = (props: BurgerMenuProps) => {
             {currentUser?.profileImage ? (
               <img
                 // プロフィール画像が存在しないならデフォルト画像表示
-                src={currentUser?.profileImage.url ? currentUser?.profileImage.url : DefaultIcon}
-                className="w-16 h-16 mr-4 cursor-pointer"
+                src={currentUser?.profileImage.url ? currentUser?.profileImage.url : DefaultIconUrl}
+                className="w-16 h-16 mr-4 cursor-pointer rounded-full"
                 id="userIcon"
                 alt="icon"
                 onClick={changeOpenUserMenu}

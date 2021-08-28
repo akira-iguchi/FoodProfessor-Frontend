@@ -5,7 +5,7 @@ export type User = {
   email: string
   firstName: string
   lastName: string
-  profileImage?: {
+  profileImage: {
     url: string
   }
   allowPasswordChange: boolean

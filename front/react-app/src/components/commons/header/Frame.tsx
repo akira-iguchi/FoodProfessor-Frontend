@@ -16,6 +16,11 @@ const Header: React.FC = () => {
 
   const history = useHistory()
 
+  // 空の関数(searchFormにバーガーメニューを閉じる関数をpropsで送りたいが、Frameの方は関係ない)
+  const empty = (): void => {
+    return
+  }
+
   // ユーザーメニュー表示切り替え
   const changeOpenUserMenu = (): void => {
     setIsOpenUserMenu(!isOpenUserMenu)
@@ -51,21 +56,15 @@ const Header: React.FC = () => {
     if (!loading) {
       if (isLoggedIn) {
         return (
-          <div className="flex maxLg:hidden">
-            <Link to="#" className="mt-4 mr-8 text-lg text-darkRed font-bold">
-              マイレシピ
-            </Link>
-            <Link to="/recipes/create" className="mt-4 mr-8 text-lg text-darkRed font-bold">
+          <div className="flex maxMd:hidden">
+            <Link to="/recipes/create" className="mt-4 mr-10 text-lg text-darkRed font-bold">
               レシピ登録
-            </Link>
-            <Link to="#" className="mt-4 mr-8 text-lg text-darkRed font-bold">
-              カテゴリ一覧
             </Link>
             {currentUser?.profileImage ? (
               <img
                 // プロフィール画像が存在しないならデフォルト画像表示
                 src={currentUser?.profileImage.url ? currentUser?.profileImage.url : DefaultIconUrl}
-                className="w-16 h-16 mr-4 cursor-pointer rounded-full"
+                className="w-14 h-14 mr-6 cursor-pointer rounded-full"
                 id="userIcon"
                 alt="icon"
                 onClick={changeOpenUserMenu}
@@ -110,7 +109,7 @@ const Header: React.FC = () => {
 
   return (
     <div>
-      <div className={isLoggedIn ? 'minLg:hidden' : 'minMd:hidden'}>
+      <div className={isLoggedIn ? 'minMd:hidden' : 'minMd:hidden'}>
         <BurgerMenu right />
       </div>
 
@@ -121,10 +120,12 @@ const Header: React.FC = () => {
           </Link>
         </div>
 
-        <SearchForm />
+        <div className="flex ml-auto">
+          <SearchForm formStyles="relative top-6 mr-10 maxMd:hidden" closeBurgerMenu={empty} />
 
-        <div className="relative top-2 ml-auto">
-          <AuthButtons />
+          <div className="relative top-2">
+            <AuthButtons />
+          </div>
         </div>
       </div>
     </div>

@@ -23,7 +23,7 @@ const CommonLayout: React.FC<CommonLayoutProps> = ({ children }: CommonLayoutPro
 
   return (
     <div className="relative min-h-screen flex flex-col">
-      <header className="fixed w-full">
+      <header className="fixed w-full z-10">
         <Header />
       </header>
       <main className="container flex-1 mt-28">{children}</main>

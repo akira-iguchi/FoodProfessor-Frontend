@@ -13,11 +13,23 @@ import Card from '@material-ui/core/Card'
 import CardContent from '@material-ui/core/CardContent'
 import CardHeader from '@material-ui/core/CardHeader'
 
+import AlertMessage from 'components/commons/AlertMessage'
+
+export type userEditErrorMessageTypes = {
+  firstName: string[]
+  lastName: string[]
+  email: string[]
+  profileImage?: string[]
+}
+
 const Profile: React.FC<any> = ({ match }) => {
   const history = useHistory()
 
   const { currentUser, isLoggedIn, setIsLoggedIn } = useContext(AuthContext)
   const [user, setUser] = useState<User | null>()
+
+  const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
+  const [errorMessages, setErrorMessages] = useState<userEditErrorMessageTypes | undefined>()
 
   const [firstName, setFirstName] = useState<string>('')
   const [lastName, setLastName] = useState<string>('')
@@ -73,11 +85,11 @@ const Profile: React.FC<any> = ({ match }) => {
         const res = await UpdateProfileData(user?.id, params)
 
         if (res.status === 201) {
-          history.push(`/users/${user?.id}`)
-          history.go(0) // ヘッダーのアイコンを更新するためページをリロード
+          window.location.href = `/users/${user?.id}` // ヘッダーのアイコンを更新するためページをロード
         }
       } catch (err) {
-        console.log(err)
+        setAlertMessageOpen(true)
+        setErrorMessages(err.response.data[0])
       }
     } else {
       history.push('/login')
@@ -86,6 +98,10 @@ const Profile: React.FC<any> = ({ match }) => {
 
   return (
     <>
+      <AlertMessage // エラーが発生した場合はアラートを表示
+        open={alertMessageOpen}
+        message="会員情報を更新できませんでした。"
+      />
       {/* ユーザー情報を読み込ませてからvalueに追加 */}
       {user ? (
         <form noValidate autoComplete="off">
@@ -111,6 +127,24 @@ const Profile: React.FC<any> = ({ match }) => {
                   onChange={(event) => setLastName(event.target.value)}
                 />
               </div>
+              {errorMessages?.firstName ? (
+                errorMessages?.firstName.map((error: string, index: number) => (
+                  <p className="text-red text-sm float-left mb-4" key={index}>
+                    姓字{error}
+                  </p>
+                ))
+              ) : (
+                <p className="mb-4"></p>
+              )}
+              {errorMessages?.lastName ? (
+                errorMessages?.lastName.map((error: string, index: number) => (
+                  <p className="text-red text-sm float-left mb-4" key={index}>
+                    名前{error}
+                  </p>
+                ))
+              ) : (
+                <p className="mb-4"></p>
+              )}
               <TextField
                 variant="outlined"
                 required
@@ -121,25 +155,44 @@ const Profile: React.FC<any> = ({ match }) => {
                 className="mb-4"
                 onChange={(event) => setEmail(event.target.value)}
               />
-              <label htmlFor="profileImage" className="float-left mt-2 cursor-pointer">
-                プロフィール画像
-              </label>
-              <input
-                accept="image/*,.png,.jpg,.jpeg,.gif"
-                id="profileImage"
-                type="file"
-                className="mt-2 float-left"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  uploadProfileImage(e)
-                }}
-              />
-              <br />
+              {errorMessages?.email ? (
+                errorMessages?.email.map((error: string, index: number) => (
+                  <p className="text-red text-sm text-left mb-4" key={index}>
+                    メールアドレス{error}
+                  </p>
+                ))
+              ) : (
+                <p className="mb-4"></p>
+              )}
+              <div className="relative">
+                <label htmlFor="profileImage" className="float-left mb-2 cursor-pointer">
+                  プロフィール画像
+                </label>
+                <input
+                  accept="image/*,.png,.jpg,.jpeg,.gif"
+                  id="profileImage"
+                  type="file"
+                  className="float-left"
+                  onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                    uploadProfileImage(e)
+                  }}
+                />
+              </div>
+              {errorMessages?.profileImage ? (
+                errorMessages?.profileImage.map((error: string, index: number) => (
+                  <p className="text-red text-sm float-left mb-4" key={index}>
+                    プロフィール画像{error}
+                  </p>
+                ))
+              ) : (
+                <p className="mb-4"></p>
+              )}
               <button
                 type="submit"
                 className="mt-8 mb-4 px-10 py-2 rounded-full bg-lightGreen text-white"
                 onClick={handleUpdate}
               >
-                変更
+                更新
               </button>
             </CardContent>
           </Card>

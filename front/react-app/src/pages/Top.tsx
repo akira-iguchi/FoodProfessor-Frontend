@@ -46,9 +46,9 @@ const Top: React.FC = () => {
         )}
       </div>
 
-      {/* 早くできる料理 */}
+      {/* 早くできるレシピ */}
       <p className="w-52 mt-12 mb-4 py-2 text-center bg-darkRed rounded-full">
-        <span className="font-bold text-orange">早くできる料理 トップ3</span>
+        <span className="font-bold text-orange">早くできるレシピ トップ3</span>
       </p>
 
       <div className="grid grid-cols-5 maxXl:grid-cols-4 maxMd:grid-cols-3 maxSm:grid-cols-2 gap-4">
@@ -76,7 +76,7 @@ const Top: React.FC = () => {
       <div>
         {ingredients ? (
           ingredients.map((ingredient: Ingredient) => (
-            <Link to="#" key={ingredient.id} className="font-w6 mb-1 block">
+            <Link to="#" key={ingredient.id} className="mb-1 block">
               {ingredient.ingredientName}
             </Link>
           ))

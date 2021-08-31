@@ -6,7 +6,7 @@ import { Logout } from 'lib/apis/auth'
 import { AuthContext } from 'App'
 
 import { DefaultIconUrl } from 'images/defaultIcon'
-// import SearchForm from 'components/commons/header/SearchForm'
+import SearchForm from 'components/commons/header/SearchForm'
 import { slide as Menu } from 'react-burger-menu' // react-burger-menuというパッケージ
 
 type BurgerMenuProps = {
@@ -79,20 +79,17 @@ const BurgerMenu: React.FC<BurgerMenuProps> = (props: BurgerMenuProps) => {
       if (isLoggedIn) {
         return (
           <>
-            <Link to="#" className="bm-item menu-item" onClick={closeBurgerMenu}>
-              マイレシピ
-            </Link>
-            <Link to="/recipes/create" className="bm-item menu-item" onClick={closeBurgerMenu}>
+            <div className="relative right-10 mb-12">
+              <SearchForm formStyles="relative top-6 left-10 ml-auto" closeBurgerMenu={closeBurgerMenu} />
+            </div>
+            <Link to="/recipes/create" className="mt-6 bm-item menu-item" onClick={closeBurgerMenu}>
               レシピ登録
-            </Link>
-            <Link to="#" className="bm-item menu-item" onClick={closeBurgerMenu}>
-              カテゴリ一覧
             </Link>
             {currentUser?.profileImage ? (
               <img
                 // プロフィール画像が存在しないならデフォルト画像表示
                 src={currentUser?.profileImage.url ? currentUser?.profileImage.url : DefaultIconUrl}
-                className="w-16 h-16 mr-4 cursor-pointer rounded-full"
+                className="w-16 h-16 mt-6 mr-4 cursor-pointer rounded-full"
                 id="userIcon"
                 alt="icon"
                 onClick={changeOpenUserMenu}

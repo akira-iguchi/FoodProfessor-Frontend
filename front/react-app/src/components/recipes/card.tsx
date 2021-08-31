@@ -18,7 +18,7 @@ const RecipeCard: React.FC<Recipe> = (props: Recipe) => {
         ) : (
           <></>
         )}
-        <p className="text-2xl font-w6 text-center">{props.recipeName}</p>
+        <p className="text-2xl text-center">{props.recipeName}</p>
       </Link>
     </div>
   )

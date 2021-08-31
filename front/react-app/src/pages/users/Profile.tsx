@@ -45,7 +45,7 @@ const Profile: React.FC<any> = ({ match }) => {
             <></>
           )}
 
-          <p className="relative top-12 left-8 max-w-xl mt-4 mr-auto text-2xl font-w6 maxSm:top-0 maxSm:left-0 maxSm:m-auto maxSm:mb-4  maxLg:max-w-sm">
+          <p className="relative top-12 left-8 max-w-xl mt-4 mr-auto text-2xl maxSm:top-0 maxSm:left-0 maxSm:m-auto maxSm:mb-4  maxLg:max-w-sm">
             {user?.firstName} {user?.lastName}
           </p>
 
@@ -60,7 +60,7 @@ const Profile: React.FC<any> = ({ match }) => {
             <></>
           )}
         </div>
-        <div className="relative inline-flex text-lg font-w6 maxSm:bottom-0 maxSm:left-0 maxSm:my-8">
+        <div className="relative inline-flex text-lg maxSm:bottom-0 maxSm:left-0 maxSm:my-8">
           <span className="mr-4">1 フォロー</span>
           <span>1 フォロワー</span>
         </div>

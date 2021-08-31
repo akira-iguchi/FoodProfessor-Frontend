@@ -1,5 +1,5 @@
-import React, { useState, useContext, useCallback } from 'react'
-import { Redirect, useHistory } from 'react-router-dom'
+import React, { useState, useContext } from 'react'
+import { useHistory } from 'react-router-dom'
 
 import { AuthContext } from 'App'
 
@@ -8,42 +8,53 @@ import { createRecipeData } from 'lib/apis/recipes/createRecipe'
 import AlertMessage from 'components/commons/AlertMessage'
 import RecipeForm from 'components/recipes/form'
 
-export type errorMessageTypes = {
+export type createRecipeErrorMessageTypes = {
   recipeName: string[]
   recipeTime: string[]
   recipeImage: string[]
+}
+
+export type createIngredientErrorMessageTypes = {
   ingredientName: string[]
   quantity: string[]
+}
+
+export type createProcedureErrorMessageTypes = {
   procedureContent: string[]
   order: string[]
-  procedureImage: string[]
+}
+
+export type ingredientTypes = {
+  ingredientName: string | null | undefined
+  quantity: number | null | undefined
 }
 
 const CreateRecipe: React.FC = () => {
   const history = useHistory()
 
-  const { currentUser, isLoggedIn, setIsLoggedIn } = useContext(AuthContext)
+  const { currentUser, isLoggedIn } = useContext(AuthContext)
 
   const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
+  const [recipeErrorMessages, setRecipeErrorMessages] = useState<createRecipeErrorMessageTypes | undefined>()
+  const [ingredientErrorMessages, setIngredientErrorMessages] = useState<
+    createIngredientErrorMessageTypes | undefined
+  >()
+  const [procedureErrorMessages, setProcedureErrorMessages] = useState<createProcedureErrorMessageTypes | undefined>()
 
   const [recipeName, setRecipeName] = useState<string>('')
   const [recipeTime, setRecipeTime] = useState<any>(0)
   const [recipeImage, setRecipeImage] = useState<File>()
 
-  const [ingredientName, setIngredientName] = useState<string>('')
-  const [quantity, setQuantity] = useState<any>(0)
+  const [ingredientColumns, setIngredientColumns] = useState<ingredientTypes[]>([{ ingredientName: '', quantity: 0 }])
 
   const [procedureContent, setProcedureContent] = useState<string>('')
   const [order, setOrder] = useState<any>(0)
-  const [procedureImage, setProcedureImage] = useState<File>()
-
-  const [errorMessages, setErrorMessages] = useState<errorMessageTypes | undefined>()
-
-  const handleCloseAlertMessage = (): void => setAlertMessageOpen(false)
 
   // FormData形式でデータを作成
   const createFormData = (): FormData => {
     const formData = new FormData()
+
+    console.log(ingredientColumns)
 
     if (currentUser) formData.append('currentUserId', String(currentUser?.id))
 
@@ -51,12 +62,10 @@ const CreateRecipe: React.FC = () => {
     formData.append('recipeTime', recipeTime)
     if (recipeImage) formData.append('recipeImage', recipeImage)
 
-    formData.append('ingredientName', ingredientName)
-    formData.append('quantity', quantity)
+    // formData.append('ingredientColumns', ingredientColumns)
 
     formData.append('procedureContent', procedureContent)
     formData.append('order', order)
-    if (procedureImage) formData.append('procedureImage', procedureImage)
 
     return formData
   }
@@ -75,9 +84,11 @@ const CreateRecipe: React.FC = () => {
           history.push('/top')
         }
       } catch (err) {
-        setAlertMessageOpen(true)
         console.log(err.response.data)
-        setErrorMessages(err.response.data)
+        setAlertMessageOpen(true)
+        setRecipeErrorMessages(err.response.data[0])
+        setIngredientErrorMessages(err.response.data[1])
+        setProcedureErrorMessages(err.response.data[2])
       }
     } else {
       history.push('/login')
@@ -89,20 +100,19 @@ const CreateRecipe: React.FC = () => {
       <AlertMessage // エラーが発生した場合はアラートを表示
         open={alertMessageOpen}
         message="レシピを投稿できませんでした。"
-        handleCloseAlertMessage={handleCloseAlertMessage}
       />
       <RecipeForm
-        recipeName={recipeName}
         setRecipeName={setRecipeName}
         setRecipeTime={setRecipeTime}
         setRecipeImage={setRecipeImage}
-        setIngredientName={setIngredientName}
-        setQuantity={setQuantity}
+        ingredientColumns={ingredientColumns}
+        setIngredientColumns={setIngredientColumns}
         setProcedureContent={setProcedureContent}
         setOrder={setOrder}
-        setProcedureImage={setProcedureImage}
         createRecipe={createRecipe}
-        errorMessages={errorMessages}
+        recipeErrorMessages={recipeErrorMessages}
+        ingredientErrorMessages={ingredientErrorMessages}
+        procedureErrorMessages={procedureErrorMessages}
       />
     </>
   )

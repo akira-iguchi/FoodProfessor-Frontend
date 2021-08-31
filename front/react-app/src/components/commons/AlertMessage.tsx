@@ -1,16 +1,9 @@
 type AlertMessageProps = {
   open: boolean
   message: string
-  handleCloseAlertMessage: () => void
 }
 
-const AlertMessage = ({ open, message, handleCloseAlertMessage }: AlertMessageProps) => {
-  // if (open) {
-  //   window.setTimeout((): void => {
-  //     handleCloseAlertMessage()
-  //   }, 2500)
-  // }
-
+const AlertMessage = ({ open, message }: AlertMessageProps) => {
   return (
     <>
       {open ? (

@@ -1,13 +1,10 @@
-import React, { useState } from 'react'
 import { useHistory, Link } from 'react-router-dom'
 
 const SelectItems: React.FC = () => {
-  const [recipeWard, setRecipeWard] = useState<string>('')
-
   const history = useHistory()
 
   return (
-    <div className="mr-12 w-48 border-2 border-brown maxMd:hidden">
+    <div className="mr-12 w-96 border-2 border-brown maxMd:hidden">
       <div className="border-b border-brown bg-lightYellow text-darkRed py-2 font-medium text-center">材料</div>
       <Link to="/ingredients/にんじん/recipes" className="block border-b border-brown py-2 font-medium text-center">
         にんじん

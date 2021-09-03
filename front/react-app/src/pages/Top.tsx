@@ -38,6 +38,8 @@ const Top: React.FC = () => {
               recipeName={recipe.recipeName}
               recipeImage={recipe.recipeImage}
               recipeTime={recipe.recipeTime}
+              createdAt={recipe.createdAt}
+              updatedAt={recipe.updatedAt}
               userId={recipe.userId}
             />
           ))
@@ -60,6 +62,8 @@ const Top: React.FC = () => {
               recipeName={recipe.recipeName}
               recipeImage={recipe.recipeImage}
               recipeTime={recipe.recipeTime}
+              createdAt={recipe.createdAt}
+              updatedAt={recipe.updatedAt}
               userId={recipe.userId}
             />
           ))
@@ -76,7 +80,7 @@ const Top: React.FC = () => {
       <div>
         {ingredients ? (
           ingredients.map((ingredient: Ingredient) => (
-            <Link to="#" key={ingredient.id} className="mb-1 block">
+            <Link to={`/ingredients/${ingredient.ingredientName}/recipes`} key={ingredient.id} className="mb-1 block">
               {ingredient.ingredientName}
             </Link>
           ))

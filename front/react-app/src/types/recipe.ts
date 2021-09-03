@@ -6,4 +6,6 @@ export type Recipe = {
   }
   recipeTime: number
   userId: number
+  createdAt: Date
+  updatedAt: Date
 }

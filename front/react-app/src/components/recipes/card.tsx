@@ -7,12 +7,12 @@ import { DefaultRecipeImageUrl } from 'images/defaultRecipeImage'
 const RecipeCard: React.FC<Recipe> = (props: Recipe) => {
   return (
     <div>
-      <Link to="#">
+      <Link to={`/recipes/${props.id}`}>
         {props.recipeImage ? (
           <img
             // レシピ画像が存在しないならデフォルト画像表示
             src={props.recipeImage.url ? props.recipeImage.url : DefaultRecipeImageUrl}
-            className="max-w-48 max-h-48 mr-auto ml-auto mb-2 border-2 border-orange hover:no-underline"
+            className="mx-auto mb-2 border-2 border-orange hover:no-underline"
             alt="recipeImage"
           />
         ) : (

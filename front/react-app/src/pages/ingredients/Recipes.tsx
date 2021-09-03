@@ -33,6 +33,8 @@ const IngredientRecipes: React.FC<any> = ({ match }) => {
                 recipeName={recipe.recipeName}
                 recipeImage={recipe.recipeImage}
                 recipeTime={recipe.recipeTime}
+                createdAt={recipe.createdAt}
+                updatedAt={recipe.updatedAt}
                 userId={recipe.userId}
               />
             ))

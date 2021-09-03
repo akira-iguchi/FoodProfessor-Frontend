@@ -120,6 +120,9 @@ const BurgerMenu: React.FC<BurgerMenuProps> = (props: BurgerMenuProps) => {
       } else {
         return (
           <>
+            <div className="relative right-10 mb-12">
+              <SearchForm formStyles="relative top-6 left-10 ml-auto" closeBurgerMenu={closeBurgerMenu} />
+            </div>
             <Link to="/login" className="bm-item menu-item" onClick={closeBurgerMenu}>
               ログイン
             </Link>

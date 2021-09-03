@@ -17,7 +17,6 @@ type RecipeParamProps = {
   ingredientColumns: ingredientTypes[]
   setIngredientColumns: (e: ingredientTypes[]) => void
   setProcedureContent: (e: string) => void
-  setOrder: (e: number) => void
   createRecipe: () => void
   recipeErrorMessages: createRecipeErrorMessageTypes | undefined
   ingredientErrorMessages: createIngredientErrorMessageTypes | undefined
@@ -31,7 +30,6 @@ const RecipeForm: React.FC<RecipeParamProps> = ({
   ingredientColumns,
   setIngredientColumns,
   setProcedureContent,
-  setOrder,
   createRecipe,
   recipeErrorMessages,
   ingredientErrorMessages,
@@ -55,11 +53,9 @@ const RecipeForm: React.FC<RecipeParamProps> = ({
           />
           <TextField
             variant="outlined"
-            type="number"
             label="分量"
             id={'quantityOf' + String(index)}
             value={ingredientColumns[index].quantity}
-            inputProps={{ min: 0 }}
             margin="dense"
             className="mr-2"
             onChange={(event) => inputQuantity(event, index)}
@@ -99,7 +95,7 @@ const RecipeForm: React.FC<RecipeParamProps> = ({
 
   const addIngredientForm = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault()
-    setIngredientColumns([...ingredientColumns, { ingredientName: '', quantity: 0 }])
+    setIngredientColumns([...ingredientColumns, { ingredientName: '', quantity: '' }])
     setNumberOfIngredientForms(numberOfIngredientForms + 1)
   }
 
@@ -122,7 +118,7 @@ const RecipeForm: React.FC<RecipeParamProps> = ({
     const ingredientColumnCopy = ingredientColumns.slice()
     ingredientColumnCopy[index] = {
       ingredientName: e.target.value,
-      quantity: Number(quantityValue?.getAttribute('value')),
+      quantity: quantityValue?.getAttribute('value'),
     }
     setIngredientColumns(ingredientColumnCopy)
   }
@@ -133,7 +129,7 @@ const RecipeForm: React.FC<RecipeParamProps> = ({
     const ingredientColumnCopy = ingredientColumns.slice()
     ingredientColumnCopy[index] = {
       ingredientName: ingredientNameValue?.getAttribute('value'),
-      quantity: Number(e.target.value),
+      quantity: e.target.value,
     }
     setIngredientColumns(ingredientColumnCopy)
   }
@@ -234,24 +230,6 @@ const RecipeForm: React.FC<RecipeParamProps> = ({
           )}
           {[...Array(procedureForms)].map((value: number, index: number) => (
             <div key={index}>
-              <TextField
-                variant="outlined"
-                type="number"
-                label="手順"
-                defaultValue={index + 1}
-                inputProps={{ min: 0 }}
-                margin="dense"
-                onChange={(event) => setOrder(Number(event.target.value))}
-              />
-              {procedureErrorMessages?.order ? (
-                procedureErrorMessages.order.map((error: string, index: number) => (
-                  <p className="text-red text-sm" key={index}>
-                    手順{error}
-                  </p>
-                ))
-              ) : (
-                <></>
-              )}
               <TextField
                 variant="outlined"
                 multiline

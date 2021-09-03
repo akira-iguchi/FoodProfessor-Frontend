@@ -15,6 +15,7 @@ import Login from 'pages/auth/Login'
 import Profile from 'pages/users/Profile'
 import EditProfile from 'pages/users/EditProfile'
 
+import RecipeDetail from 'pages/recipes/RecipeDetail'
 import CreateRecipe from 'pages/recipes/CreateRecipe'
 import SearchRecipes from 'pages/recipes/SearchRecipes'
 
@@ -84,6 +85,7 @@ const App: React.FC = () => {
             <Route exact path="/top" component={Top} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/recipes/:recipeId" component={RecipeDetail} />
             <Route exact path="/recipes/search/:recipeName" component={SearchRecipes} />
             <Route exact path="/ingredients/:ingredientName/recipes" component={IngredientRecipes} />
             <Route exact path="/categories/:categoryName/recipes" component={CategoryRecipes} />

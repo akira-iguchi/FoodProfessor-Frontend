@@ -8,6 +8,8 @@ import { AuthContext } from 'App'
 import { User } from 'types/user'
 import { Recipe } from 'types/recipe'
 
+import { DefaultIconUrl } from 'images/defaultIcon'
+
 import RecipeCards from 'components/recipes/card'
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs'
 import 'react-tabs/style/react-tabs.css'
@@ -27,9 +29,6 @@ const Profile: React.FC<any> = ({ match }) => {
     })
   }, [])
 
-  const defaultIconURL =
-    'https://food-professor.s3.ap-northeast-3.amazonaws.com/uploads/user/profile_image/defaultUser.jpg'
-
   return (
     <>
       <div className="bg-white border-2 border-brown p-2 pl-4 pb-4 pb-0 maxSm:text-center maxSm:pb-0">
@@ -37,7 +36,7 @@ const Profile: React.FC<any> = ({ match }) => {
           {user?.profileImage ? (
             <img
               // レシピ画像が存在しないならデフォルト画像表示
-              src={user?.profileImage.url ? user.profileImage.url : defaultIconURL}
+              src={user?.profileImage.url ? user.profileImage.url : DefaultIconUrl}
               className="w-32 h-32 my-4 maxSm:mx-auto rounded-full"
               alt="profileImage"
             />
@@ -83,6 +82,8 @@ const Profile: React.FC<any> = ({ match }) => {
                     recipeName={recipe.recipeName}
                     recipeImage={recipe.recipeImage}
                     recipeTime={recipe.recipeTime}
+                    createdAt={recipe.createdAt}
+                    updatedAt={recipe.updatedAt}
                     userId={recipe.userId}
                   />
                 ))
@@ -101,6 +102,8 @@ const Profile: React.FC<any> = ({ match }) => {
                     recipeName={recipe.recipeName}
                     recipeImage={recipe.recipeImage}
                     recipeTime={recipe.recipeTime}
+                    createdAt={recipe.createdAt}
+                    updatedAt={recipe.updatedAt}
                     userId={recipe.userId}
                   />
                 ))

@@ -1,10 +1,10 @@
 import { AxiosPromise } from 'axios'
 import client from 'lib/apis/client'
-import { EditProfileUrl, UpdateProfileUrl } from 'urls/index'
+import { editProfileUrl, updateProfileUrl } from 'urls/index'
 
 export const fetchEditProfileData = (userId: number): Promise<any> => {
   return client
-    .get(EditProfileUrl(userId))
+    .get(editProfileUrl(userId))
     .then((res) => {
       return res.data
     })
@@ -12,5 +12,5 @@ export const fetchEditProfileData = (userId: number): Promise<any> => {
 }
 
 export const UpdateProfileData = (userId: number | undefined, params: FormData): AxiosPromise => {
-  return client.put(UpdateProfileUrl(userId), params)
+  return client.put(updateProfileUrl(userId), params)
 }

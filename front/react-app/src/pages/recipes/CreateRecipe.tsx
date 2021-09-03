@@ -21,12 +21,11 @@ export type createIngredientErrorMessageTypes = {
 
 export type createProcedureErrorMessageTypes = {
   procedureContent: string[]
-  order: string[]
 }
 
 export type ingredientTypes = {
   ingredientName: string | null | undefined
-  quantity: number | null | undefined
+  quantity: string | null | undefined
 }
 
 const CreateRecipe: React.FC = () => {
@@ -45,10 +44,9 @@ const CreateRecipe: React.FC = () => {
   const [recipeTime, setRecipeTime] = useState<any>(0)
   const [recipeImage, setRecipeImage] = useState<File>()
 
-  const [ingredientColumns, setIngredientColumns] = useState<ingredientTypes[]>([{ ingredientName: '', quantity: 0 }])
+  const [ingredientColumns, setIngredientColumns] = useState<ingredientTypes[]>([{ ingredientName: '', quantity: '' }])
 
   const [procedureContent, setProcedureContent] = useState<string>('')
-  const [order, setOrder] = useState<any>(0)
 
   // FormData形式でデータを作成
   const createFormData = (): FormData => {
@@ -65,7 +63,6 @@ const CreateRecipe: React.FC = () => {
     // formData.append('ingredientColumns', ingredientColumns)
 
     formData.append('procedureContent', procedureContent)
-    formData.append('order', order)
 
     return formData
   }
@@ -108,7 +105,6 @@ const CreateRecipe: React.FC = () => {
         ingredientColumns={ingredientColumns}
         setIngredientColumns={setIngredientColumns}
         setProcedureContent={setProcedureContent}
-        setOrder={setOrder}
         createRecipe={createRecipe}
         recipeErrorMessages={recipeErrorMessages}
         ingredientErrorMessages={ingredientErrorMessages}

@@ -93,10 +93,10 @@ const Header: React.FC = () => {
       } else {
         return (
           <div className="flex maxMd:hidden">
-            <Link to="/login" className="mt-4 mr-4 text-lg text-darkRed font-bold">
+            <Link to="/login" className="mt-4 mr-6 text-lg text-darkRed font-bold">
               ログイン
             </Link>
-            <Link to="/register" className="mt-4 mr-3 text-lg text-darkRed font-bold">
+            <Link to="/register" className="mt-4 mr-6 text-lg text-darkRed font-bold">
               会員登録
             </Link>
           </div>

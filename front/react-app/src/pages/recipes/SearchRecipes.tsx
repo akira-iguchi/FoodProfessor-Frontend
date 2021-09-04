@@ -28,7 +28,7 @@ const SearchRecipes: React.FC<any> = ({ match }) => {
             「{match.params.recipeName}」の検索結果
           </p>
         )}
-        <div className="grid grid-cols-5 maxXl:grid-cols-4 maxLg:grid-cols-3 maxSm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-5 maxXl:grid-cols-4 maxLg:grid-cols-2 gap-4">
           {searchRecipes ? (
             searchRecipes.map((recipe: Recipe) => (
               <RecipeCards

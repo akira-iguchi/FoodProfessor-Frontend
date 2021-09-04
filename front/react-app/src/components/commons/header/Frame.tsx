@@ -57,7 +57,7 @@ const Header: React.FC = () => {
       if (isLoggedIn) {
         return (
           <div className="flex maxMd:hidden">
-            <Link to="/recipes/create" className="mt-4 mr-10 text-lg text-darkRed font-bold">
+            <Link to="/recipe/create" className="mt-4 mr-10 text-lg text-darkRed font-bold">
               レシピ登録
             </Link>
             {currentUser?.profileImage ? (

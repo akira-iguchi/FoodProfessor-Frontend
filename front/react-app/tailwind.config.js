@@ -20,6 +20,9 @@ module.exports = {
       alertColor: '#f8d7da',
       alertTextColor: '#721c24',
       alertBorderColor: '#f5c6cb',
+      errorTextColor: '#856404',
+      errorBgColor: '#fff3cd',
+      errorBorderColor: '#ffeeba',
     },
     screens: {
       maxXl: { max: '1280px' },

@@ -82,7 +82,7 @@ const BurgerMenu: React.FC<BurgerMenuProps> = (props: BurgerMenuProps) => {
             <div className="relative right-10 mb-12">
               <SearchForm formStyles="relative top-6 left-10 ml-auto" closeBurgerMenu={closeBurgerMenu} />
             </div>
-            <Link to="/recipes/create" className="mt-6 bm-item menu-item" onClick={closeBurgerMenu}>
+            <Link to="/recipe/create" className="mt-6 bm-item menu-item" onClick={closeBurgerMenu}>
               レシピ登録
             </Link>
             {currentUser?.profileImage ? (

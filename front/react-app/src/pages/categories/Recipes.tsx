@@ -22,7 +22,7 @@ const CategoryRecipes: React.FC<any> = ({ match }) => {
       <SelectItems />
       <div className="mx-auto">
         <p className="text-center mb-6 text-4xl font-medium maxSm:text-3xl">「{match.params.categoryName}」のレシピ</p>
-        <div className="grid grid-cols-5 maxXl:grid-cols-4 maxLg:grid-cols-3 maxSm:grid-cols-2 gap-4">
+        <div className="grid grid-cols-5 maxXl:grid-cols-4 maxLg:grid-cols-2 gap-4">
           {recipes ? (
             recipes.map((recipe: Recipe) => (
               <RecipeCards

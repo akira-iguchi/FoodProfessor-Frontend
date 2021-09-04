@@ -71,7 +71,7 @@ const CommentForm: React.FC<propsType> = (props) => {
             value={content}
             label="コメント"
             margin="dense"
-            className="mr-2"
+            className="block mt-4 mr-2"
             onChange={(event) => setContent(event.target.value)}
           />
           {errorMessages?.commentContent ? (

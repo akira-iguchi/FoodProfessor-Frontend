@@ -1,9 +1,12 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import { AuthContext } from 'App'
 
-import { createRecipeData } from 'lib/apis/recipes/createRecipe'
+import { Recipe } from 'types/recipe'
+
+import { fetchEditRecipeData } from 'lib/apis/recipes/editRecipe'
+import { updateRecipeData } from 'lib/apis/recipes/editRecipe'
 
 import AlertMessage from 'components/commons/AlertMessage'
 import RecipeForm from 'components/recipes/form'
@@ -19,13 +22,15 @@ export type procedureTypes = {
   procedure_content: string | null | undefined
 }
 
-const CreateRecipe: React.FC = () => {
+const EditRecipe: React.FC<any> = ({ match }) => {
   const history = useHistory()
 
   const { currentUser, isLoggedIn } = useContext(AuthContext)
 
   const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
   const [errorMessages, setErrorMessages] = useState<string[]>()
+
+  const [recipe, setRecipe] = useState<Recipe | null>()
 
   const [recipeName, setRecipeName] = useState<string>('')
   const [recipeTime, setRecipeTime] = useState<any>(0)
@@ -36,6 +41,21 @@ const CreateRecipe: React.FC = () => {
   const [categories, setCategories] = useState<string[]>(['朝食'])
 
   const [procedureParams, setProcedureParams] = useState<procedureTypes[]>([{ procedure_content: '' }])
+
+  // APIに接続してデータ取得
+  useEffect(() => {
+    fetchEditRecipeData(match.params.recipeId).then((data) => {
+      setRecipe(data.recipe)
+      setRecipeName(data.recipe.recipeName)
+      setRecipeTime(data.recipe.recipeTime)
+      setIngredientParams(data.ingredients)
+      setCategories(data.categories)
+      setProcedureParams(data.procedures)
+      if (!isLoggedIn || data.recipe.userId !== currentUser?.id) {
+        history.push('/top')
+      }
+    })
+  }, [])
 
   // FormData形式でデータを作成
   const createFormData = (): FormData => {
@@ -56,15 +76,18 @@ const CreateRecipe: React.FC = () => {
     return formData
   }
 
-  const createRecipe = async () => {
+  const updateRecipe = async () => {
     if (isLoggedIn) {
       const params = createFormData()
 
       try {
-        const res = await createRecipeData(params)
+        const res = await updateRecipeData(recipe?.id, params)
+
+        console.log(res)
 
         if (res.status === 201) {
-          history.push(`/recipes/${res.data.recipe.id}`)
+          // history.push(`/recipes/${params.id}`)
+          history.push('/top')
         }
       } catch (err) {
         console.log(err.response.data)
@@ -82,7 +105,7 @@ const CreateRecipe: React.FC = () => {
     <>
       <AlertMessage // エラーが発生した場合はアラートを表示
         open={alertMessageOpen}
-        message="レシピを投稿できませんでした。"
+        message="レシピを更新できませんでした。"
       />
       {errorMessages ? (
         <div className="bg-errorBgColor mx-auto mb-6 px-4 pt-2 max-w-2xl border border-errorBorderColor text-errorTextColor">
@@ -115,10 +138,10 @@ const CreateRecipe: React.FC = () => {
         setCategories={setCategories}
         procedureParams={procedureParams}
         setProcedureParams={setProcedureParams}
-        createRecipe={createRecipe}
+        createRecipe={updateRecipe}
       />
     </>
   )
 }
 
-export default CreateRecipe
+export default EditRecipe

@@ -11,6 +11,6 @@ export const fetchEditProfileData = (userId: number): Promise<any> => {
     .catch((error) => console.log(error))
 }
 
-export const UpdateProfileData = (userId: number | undefined, params: FormData): AxiosPromise => {
+export const updateProfileData = (userId: number | undefined, params: FormData): AxiosPromise => {
   return client.put(updateProfileUrl(userId), params)
 }

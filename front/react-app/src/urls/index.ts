@@ -11,6 +11,9 @@ export const updateProfileUrl = (userId: number | undefined): string => `/users/
 
 export const recipeDetailUrl = (recipeId: number): string => `/recipes/${recipeId}`
 export const createRecipeUrl = '/recipes'
+export const editRecipeUrl = (recipeId: number): string => `/recipes/${recipeId}/edit`
+export const updateRecipeUrl = (recipeId: number | undefined): string => `/recipes/${recipeId}`
+export const deleteRecipeUrl = (recipeId: number | undefined): string => `/recipes/${recipeId}`
 
 export const createCommentUrl = (recipeId: number | undefined): string => `/recipes/${recipeId}/comments`
 export const deleteCommentUrl = (recipeId: number | undefined, commentId: number | undefined): string =>

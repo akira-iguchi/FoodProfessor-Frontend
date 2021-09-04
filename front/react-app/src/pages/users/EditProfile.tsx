@@ -6,7 +6,7 @@ import { fetchEditProfileData } from 'lib/apis/users/editProfile'
 import { AuthContext } from 'App'
 
 import { User } from 'types/user'
-import { UpdateProfileData } from 'lib/apis/users/editProfile'
+import { updateProfileData } from 'lib/apis/users/editProfile'
 
 import TextField from '@material-ui/core/TextField'
 import Card from '@material-ui/core/Card'
@@ -25,7 +25,7 @@ export type userEditErrorMessageTypes = {
 const Profile: React.FC<any> = ({ match }) => {
   const history = useHistory()
 
-  const { currentUser, isLoggedIn, setIsLoggedIn } = useContext(AuthContext)
+  const { currentUser, isLoggedIn } = useContext(AuthContext)
   const [user, setUser] = useState<User | null>()
 
   const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
@@ -43,12 +43,11 @@ const Profile: React.FC<any> = ({ match }) => {
       setFirstName(data.user.firstName)
       setLastName(data.user.lastName)
       setEmail(data.user.email)
+      if (!isLoggedIn || data.user?.id !== currentUser?.id) {
+        history.push('/top')
+      }
     })
   }, [])
-
-  if (user && user?.id !== currentUser?.id) {
-    return <Redirect to="/top" />
-  }
 
   const uploadProfileImage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.currentTarget.files) {
@@ -72,17 +71,17 @@ const Profile: React.FC<any> = ({ match }) => {
 
   const handleUpdate = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault()
-    window.scrollTo(0, 0)
-
-    const params = createFormData()
 
     if (isLoggedIn) {
+      window.scrollTo(0, 0)
+      const params = createFormData()
+
       if (user && user?.id !== currentUser?.id) {
-        return <Redirect to="/top" />
+        history.push('/top')
       }
 
       try {
-        const res = await UpdateProfileData(user?.id, params)
+        const res = await updateProfileData(user?.id, params)
 
         if (res.status === 201) {
           window.location.href = `/users/${user?.id}` // ヘッダーのアイコンを更新するためページをロード

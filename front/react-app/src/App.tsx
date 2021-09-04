@@ -17,6 +17,7 @@ import EditProfile from 'pages/users/EditProfile'
 
 import RecipeDetail from 'pages/recipes/RecipeDetail'
 import CreateRecipe from 'pages/recipes/CreateRecipe'
+import EditRecipe from 'pages/recipes/EditRecipe'
 import SearchRecipes from 'pages/recipes/SearchRecipes'
 
 import IngredientRecipes from 'pages/ingredients/Recipes'
@@ -92,7 +93,8 @@ const App: React.FC = () => {
             <Private>
               <Route exact path="/users/:userId" component={Profile} />
               <Route exact path="/users/:userId/edit" component={EditProfile} />
-              <Route exact path="/recipes/create" component={CreateRecipe} />
+              <Route exact path="/recipe/create" component={CreateRecipe} />
+              <Route exact path="/recipe/:recipeId/edit" component={EditRecipe} />
             </Private>
           </Switch>
         </CommonLayout>

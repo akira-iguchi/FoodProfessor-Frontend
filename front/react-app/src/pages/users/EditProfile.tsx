@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useContext, useCallback } from 'react'
-import { Redirect, useHistory } from 'react-router-dom'
+import { useHistory } from 'react-router-dom'
+import Cookies from 'js-cookie'
 
 import { fetchEditProfileData } from 'lib/apis/users/editProfile'
 
@@ -25,7 +26,7 @@ export type userEditErrorMessageTypes = {
 const Profile: React.FC<any> = ({ match }) => {
   const history = useHistory()
 
-  const { currentUser, isLoggedIn } = useContext(AuthContext)
+  const { currentUser, setCurrentUser, isLoggedIn } = useContext(AuthContext)
   const [user, setUser] = useState<User | null>()
 
   const [alertMessageOpen, setAlertMessageOpen] = useState<boolean>(false)
@@ -60,6 +61,7 @@ const Profile: React.FC<any> = ({ match }) => {
   const createFormData = (): FormData => {
     const formData = new FormData()
 
+    // formData.append('currentPassword', 'test123')
     formData.append('firstName', firstName)
     formData.append('lastName', lastName)
     if (profileImage) formData.append('profileImage', profileImage)
@@ -81,14 +83,20 @@ const Profile: React.FC<any> = ({ match }) => {
       }
 
       try {
-        const res = await updateProfileData(user?.id, params)
+        const res = await updateProfileData(params)
 
-        if (res.status === 201) {
-          window.location.href = `/users/${user?.id}` // ヘッダーのアイコンを更新するためページをロード
+        if (res.status === 200) {
+          Cookies.set('_access_token', res.headers['access-token'])
+          Cookies.set('_client', res.headers['client'])
+          Cookies.set('_uid', res.headers['uid'])
+
+          setCurrentUser(res.data.data)
+
+          history.push(`/users/${user?.id}`)
         }
       } catch (err) {
         setAlertMessageOpen(true)
-        setErrorMessages(err.response.data[0])
+        setErrorMessages(err.response.data.errors)
       }
     } else {
       history.push('/login')
@@ -129,7 +137,7 @@ const Profile: React.FC<any> = ({ match }) => {
               {errorMessages?.firstName ? (
                 errorMessages?.firstName.map((error: string, index: number) => (
                   <p className="text-red text-sm float-left mb-4" key={index}>
-                    姓字{error}
+                    姓{error}
                   </p>
                 ))
               ) : (
@@ -138,7 +146,7 @@ const Profile: React.FC<any> = ({ match }) => {
               {errorMessages?.lastName ? (
                 errorMessages?.lastName.map((error: string, index: number) => (
                   <p className="text-red text-sm float-left mb-4" key={index}>
-                    名前{error}
+                    名{error}
                   </p>
                 ))
               ) : (
@@ -179,7 +187,7 @@ const Profile: React.FC<any> = ({ match }) => {
               </div>
               {errorMessages?.profileImage ? (
                 errorMessages?.profileImage.map((error: string, index: number) => (
-                  <p className="text-red text-sm float-left mb-4" key={index}>
+                  <p className="text-red text-sm text-left mt-24 mb-4" key={index}>
                     プロフィール画像{error}
                   </p>
                 ))

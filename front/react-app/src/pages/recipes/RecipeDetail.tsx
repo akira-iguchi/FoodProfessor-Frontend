@@ -114,10 +114,14 @@ const RecipeDetail: React.FC<any> = ({ match }) => {
                   <></>
                 )}
               </div>
-              {isFavorite !== undefined ? <FavoriteButton recipeId={recipe?.id} isFavorite={isFavorite} /> : <></>}
+              {isLoggedIn && isFavorite !== undefined ? (
+                <FavoriteButton recipeId={recipe?.id} isFavorite={isFavorite} />
+              ) : (
+                <></>
+              )}
               {isLoggedIn && recipe.userId === currentUser?.id ? (
                 <span>
-                  <Link to={`/recipe/${recipe.id}/edit`}>
+                  <Link to={`/recipes/${recipe.id}/edit`}>
                     <i className="fas fa-edit relative bottom-4 ml-8 mr-2"></i>
                   </Link>
                   <button onClick={deleteRecipe}>

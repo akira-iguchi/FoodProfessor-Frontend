@@ -6,7 +6,7 @@ import { DefaultRecipeImageUrl } from 'images/defaultRecipeImage'
 
 const RecipeCard: React.FC<Recipe> = (props: Recipe) => {
   return (
-    <div className="w-48">
+    <div className="w-48 mx-auto maxSm:w-40">
       <Link to={`/recipes/${props.id}`}>
         {props.recipeImage ? (
           <img

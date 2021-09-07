@@ -11,7 +11,7 @@ import TextField from '@material-ui/core/TextField'
 
 type propsType = {
   recipeId: number | undefined
-  increaseComment: (comment: Comment) => void
+  increaseComment: (comment: Comment[]) => void
 }
 
 type createCommentErrorMessageTypes = {
@@ -47,7 +47,7 @@ const CommentForm: React.FC<propsType> = (props) => {
         const res = await createCommentData(props.recipeId, params)
 
         if (res.status === 201) {
-          props.increaseComment(res.data.comment)
+          props.increaseComment(res.data.comments)
           setErrorMessages(undefined)
           setContent('')
         }

@@ -1,23 +1,15 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { useHistory } from 'react-router-dom'
 
 import { AuthContext } from 'App'
+
+import { ingredientParamsType } from 'types/ingredient'
+import { procedureParamsType } from 'types/procedure'
 
 import { createRecipeData } from 'lib/apis/recipes/createRecipe'
 
 import AlertMessage from 'components/commons/AlertMessage'
 import RecipeForm from 'components/recipes/form'
-
-export type ingredientTypes = {
-  // キャメルケースに変換できないためスネークケースに
-  ingredient_name: string | null | undefined
-  quantity: string | null | undefined
-}
-
-export type procedureTypes = {
-  // キャメルケースに変換できないためスネークケースに
-  procedure_content: string | null | undefined
-}
 
 const CreateRecipe: React.FC = () => {
   const history = useHistory()
@@ -28,14 +20,22 @@ const CreateRecipe: React.FC = () => {
   const [errorMessages, setErrorMessages] = useState<string[]>()
 
   const [recipeName, setRecipeName] = useState<string>('')
-  const [recipeTime, setRecipeTime] = useState<any>(0)
+  const [recipeTime, setRecipeTime] = useState<number>(0)
   const [recipeImage, setRecipeImage] = useState<File>()
 
-  const [ingredientParams, setIngredientParams] = useState<ingredientTypes[]>([{ ingredient_name: '', quantity: '' }])
+  const [ingredientParams, setIngredientParams] = useState<ingredientParamsType[]>([
+    { ingredient_name: '', quantity: '' },
+  ])
+  const [numberOfIngredientForms, setNumberOfIngredientForms] = useState<number>(1)
 
   const [categories, setCategories] = useState<string[]>(['朝食'])
 
-  const [procedureParams, setProcedureParams] = useState<procedureTypes[]>([{ procedure_content: '' }])
+  const [procedureParams, setProcedureParams] = useState<procedureParamsType[]>([{ procedure_content: '' }])
+  const [numberOfProcedureForms, setNumberOfProcedureForms] = useState<number>(1)
+
+  useEffect(() => {
+    window.scrollTo(0, 0)
+  }, [])
 
   // FormData形式でデータを作成
   const createFormData = (): FormData => {
@@ -44,7 +44,7 @@ const CreateRecipe: React.FC = () => {
     if (currentUser) formData.append('currentUserId', String(currentUser?.id))
 
     formData.append('recipeName', recipeName)
-    formData.append('recipeTime', recipeTime)
+    formData.append('recipeTime', String(recipeTime))
     if (recipeImage) formData.append('recipeImage', recipeImage)
 
     formData.append('ingredientParams', JSON.stringify(ingredientParams))
@@ -67,7 +67,6 @@ const CreateRecipe: React.FC = () => {
           history.push(`/recipes/${res.data.recipe.id}`)
         }
       } catch (err) {
-        console.log(err.response.data)
         setAlertMessageOpen(true)
         // 「バリデーションに失敗しました:」という文字を削り、「, 」で分ける
         const newErrorMessages = err.response.data[0].slice(16).split(', ')
@@ -106,16 +105,22 @@ const CreateRecipe: React.FC = () => {
         <></>
       )}
       <RecipeForm
+        recipeName={recipeName}
         setRecipeName={setRecipeName}
+        recipeTime={recipeTime}
         setRecipeTime={setRecipeTime}
         setRecipeImage={setRecipeImage}
         ingredientParams={ingredientParams}
         setIngredientParams={setIngredientParams}
+        numberOfIngredientForms={numberOfIngredientForms}
+        setNumberOfIngredientForms={setNumberOfIngredientForms}
         categories={categories}
         setCategories={setCategories}
         procedureParams={procedureParams}
         setProcedureParams={setProcedureParams}
-        createRecipe={createRecipe}
+        numberOfProcedureForms={numberOfProcedureForms}
+        setNumberOfProcedureForms={setNumberOfProcedureForms}
+        sendRecipeData={createRecipe}
       />
     </>
   )

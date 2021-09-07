@@ -24,20 +24,18 @@ const RecipeComments: React.FC<Comments> = (props) => {
 
   useEffect(() => {
     setComments(props.comments)
-  }, [])
+  }, [props.comments])
 
   // コメントの追加、削除でコメント一覧更新
-  const reduceComment = (index: number): void => {
-    const updateComments = props.comments?.splice(index, 1)
-    setComments(updateComments)
+  const reduceComment = (newComments: Comment[]): void => {
+    setComments(newComments)
   }
 
-  const increaseComment = (comment: Comment): void => {
-    props.comments?.unshift(comment)
-    setComments(props.comments)
+  const increaseComment = (newComments: Comment[]): void => {
+    setComments(newComments)
   }
 
-  const deleteComment = async (e: React.MouseEvent<HTMLElement, MouseEvent>, comment: Comment, index: number) => {
+  const deleteComment = async (e: React.MouseEvent<HTMLElement, MouseEvent>, comment: Comment) => {
     e.preventDefault()
 
     if (isLoggedIn) {
@@ -50,7 +48,7 @@ const RecipeComments: React.FC<Comments> = (props) => {
           const res = await deleteCommentData(props.recipeId, comment.id)
 
           if (res.status === 200) {
-            reduceComment(index)
+            reduceComment(res.data.comments)
           }
         } catch (err) {
           console.log(err)
@@ -63,8 +61,8 @@ const RecipeComments: React.FC<Comments> = (props) => {
 
   return (
     <>
-      {props ? (
-        props.comments?.map((comment: Comment, index: number) => (
+      {comments ? (
+        comments?.map((comment: Comment, index: number) => (
           <div key={index}>
             {props.commentUsers?.map((user: User) => {
               // すべてのユーザーとコメントの投稿者のidが一致すると画像表示
@@ -87,7 +85,7 @@ const RecipeComments: React.FC<Comments> = (props) => {
                         </div>
                       </div>
                       {user.id === currentUser?.id ? (
-                        <button className="relative bottom-2 z-10" onClick={(e) => deleteComment(e, comment, index)}>
+                        <button className="relative bottom-2 z-10" onClick={(e) => deleteComment(e, comment)}>
                           <i className="fas fa-trash-alt"></i>
                         </button>
                       ) : (

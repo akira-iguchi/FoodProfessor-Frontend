@@ -106,7 +106,7 @@ const Register: React.FC = () => {
             {errorMessages?.firstName ? (
               errorMessages?.firstName.map((error: string, index: number) => (
                 <p className="text-red text-sm float-left mb-4" key={index}>
-                  姓字{error}
+                  姓{error}
                 </p>
               ))
             ) : (
@@ -115,7 +115,7 @@ const Register: React.FC = () => {
             {errorMessages?.lastName ? (
               errorMessages?.lastName.map((error: string, index: number) => (
                 <p className="text-red text-sm float-left mb-4" key={index}>
-                  名前{error}
+                  名{error}
                 </p>
               ))
             ) : (

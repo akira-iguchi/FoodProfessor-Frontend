@@ -1,5 +1,6 @@
 import { AxiosPromise } from 'axios'
 import client from 'lib/apis/client'
+import Cookies from 'js-cookie'
 import { editProfileUrl, updateProfileUrl } from 'urls/index'
 
 export const fetchEditProfileData = (userId: number): Promise<any> => {
@@ -11,6 +12,12 @@ export const fetchEditProfileData = (userId: number): Promise<any> => {
     .catch((error) => console.log(error))
 }
 
-export const updateProfileData = (userId: number | undefined, params: FormData): AxiosPromise => {
-  return client.put(updateProfileUrl(userId), params)
+export const updateProfileData = (params: FormData): AxiosPromise => {
+  return client.put(updateProfileUrl, params, {
+    headers: {
+      'access-token': Cookies.get('_access_token'),
+      client: Cookies.get('_client'),
+      uid: Cookies.get('_uid'),
+    },
+  })
 }

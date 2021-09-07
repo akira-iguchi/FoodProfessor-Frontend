@@ -13,8 +13,19 @@ export const login = (params: FormData): AxiosPromise => {
   return client.post(loginUrl, params)
 }
 
+// // サインイン（ログイン）
+// export const guestLogin = (): AxiosPromise => {
+//   return client.post(guestLoginUrl, {
+//     headers: {
+//       'access-token': Cookies.get('_access_token'),
+//       client: Cookies.get('_client'),
+//       uid: Cookies.get('_uid'),
+//     },
+//   })
+// }
+
 // サインアウト（ログアウト）
-export const Logout = () => {
+export const logout = (): AxiosPromise => {
   return client.delete(logOutUrl, {
     headers: {
       'access-token': Cookies.get('_access_token'),

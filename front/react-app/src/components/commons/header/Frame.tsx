@@ -1,8 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { useHistory, Link } from 'react-router-dom'
 
-import Cookies from 'js-cookie'
-import { Logout } from 'lib/apis/auth'
 import { AuthContext } from 'App'
 
 import MainLogo from 'images/logo.png'
@@ -11,7 +9,7 @@ import SearchForm from 'components/commons/header/SearchForm'
 import BurgerMenu from 'components/commons/header/BurgerMenu'
 
 const Header: React.FC = () => {
-  const { loading, currentUser, isLoggedIn, setIsLoggedIn } = useContext(AuthContext)
+  const { loading, currentUser, isLoggedIn, handleLogout } = useContext(AuthContext)
   const [isOpenUserMenu, setIsOpenUserMenu] = useState<boolean>(false)
 
   const history = useHistory()
@@ -31,25 +29,6 @@ const Header: React.FC = () => {
     if (e.target.id === 'userIcon' || e.target.id === 'userMenu') return
     setIsOpenUserMenu(false)
   })
-
-  const handleLogout = async () => {
-    try {
-      const res = await Logout()
-
-      if (res.data.success === true) {
-        window.scrollTo(0, 0)
-        // サインアウト時には各Cookieを削除
-        Cookies.remove('_access_token')
-        Cookies.remove('_client')
-        Cookies.remove('_uid')
-
-        setIsLoggedIn(false)
-        history.push('/top')
-      }
-    } catch (err) {
-      console.log(err)
-    }
-  }
 
   const AuthButtons = () => {
     // 認証時によってボタン変更
@@ -93,6 +72,9 @@ const Header: React.FC = () => {
       } else {
         return (
           <div className="flex maxMd:hidden">
+            {/* <button className="mt-4 mr-6 text-lg text-darkRed font-bold" onClick={handleGuestLogin}>
+              ゲストログイン
+            </button> */}
             <Link to="/login" className="mt-4 mr-6 text-lg text-darkRed font-bold">
               ログイン
             </Link>

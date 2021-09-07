@@ -2,12 +2,13 @@ export const topPageUrl = '/top'
 
 export const registerUrl = '/auth'
 export const loginUrl = '/auth/sign_in'
+// export const guestLoginUrl = '/auth/guest_login'
 export const logOutUrl = '/auth/sign_out'
 export const sessionsUrl = '/auth/sessions'
 
 export const profileUrl = (userId: number): string => `/users/${userId}`
 export const editProfileUrl = (userId: number): string => `/users/${userId}/edit`
-export const updateProfileUrl = (userId: number | undefined): string => `/users/${userId}`
+export const updateProfileUrl = '/auth'
 
 export const recipeDetailUrl = (recipeId: number): string => `/recipes/${recipeId}`
 export const createRecipeUrl = '/recipes'

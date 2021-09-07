@@ -1,8 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { useHistory, Link } from 'react-router-dom'
 
-import Cookies from 'js-cookie'
-import { Logout } from 'lib/apis/auth'
 import { AuthContext } from 'App'
 
 import { DefaultIconUrl } from 'images/defaultIcon'
@@ -18,7 +16,7 @@ type BurgerMenuState = {
 }
 
 const BurgerMenu: React.FC<BurgerMenuProps> = (props: BurgerMenuProps) => {
-  const { loading, currentUser, isLoggedIn, setIsLoggedIn } = useContext(AuthContext)
+  const { loading, currentUser, isLoggedIn, handleLogout } = useContext(AuthContext)
   const [isOpenBurgerMenu, setIsOpenBurgerMenu] = useState<boolean>(false)
   const [isOpenBurgerUserMenu, setIsOpenBurgerUserMenu] = useState<boolean>(false)
 
@@ -48,29 +46,10 @@ const BurgerMenu: React.FC<BurgerMenuProps> = (props: BurgerMenuProps) => {
   }
   // ------------------------------------------------------------------------------------
 
-  // ログアウトと同時にバーガーメニュー閉じる(Frame.tsxにもhandleLogoutがあって不満)
-  const logout = (): void => {
+  // ログアウトと同時にバーガーメニュー閉じる
+  const closeBurgerMenuAndLogout = (): void => {
     handleLogout()
     closeBurgerMenu()
-  }
-
-  const handleLogout = async () => {
-    try {
-      const res = await Logout()
-
-      if (res.data.success === true) {
-        window.scrollTo(0, 0)
-        // サインアウト時には各Cookieを削除
-        Cookies.remove('_access_token')
-        Cookies.remove('_client')
-        Cookies.remove('_uid')
-
-        setIsLoggedIn(false)
-        history.push('/top')
-      }
-    } catch (err) {
-      console.log(err)
-    }
   }
 
   const AuthMenuItems = () => {
@@ -111,7 +90,7 @@ const BurgerMenu: React.FC<BurgerMenuProps> = (props: BurgerMenuProps) => {
                 マイページ
               </Link>
               <br />
-              <button className="mt-2 mb-2 ml-5 text-md text-center" onClick={logout}>
+              <button className="mt-2 mb-2 ml-5 text-md text-center" onClick={closeBurgerMenuAndLogout}>
                 ログアウト
               </button>
             </div>
@@ -123,6 +102,9 @@ const BurgerMenu: React.FC<BurgerMenuProps> = (props: BurgerMenuProps) => {
             <div className="relative right-10 mb-12">
               <SearchForm formStyles="relative top-6 left-10 ml-auto" closeBurgerMenu={closeBurgerMenu} />
             </div>
+            {/* <button className="bm-item menu-item" onClick={handleGuestLogin}>
+              ゲストログイン
+            </button> */}
             <Link to="/login" className="bm-item menu-item" onClick={closeBurgerMenu}>
               ログイン
             </Link>

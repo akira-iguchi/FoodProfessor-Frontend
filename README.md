@@ -7,6 +7,7 @@
 ![food_frofessor-top.png](https://qiita-image-store.s3.ap-northeast-1.amazonaws.com/0/848640/f9de6ff9-4f5b-f941-f34e-951d0b92e165.png)
 
 URL: https://food-professor.herokuapp.com/top （初回のみデータの読み込みに時間がかかります）<br>
+Qiita: https://qiita.com/iguchan_4649/items/69af68d7f5ef1e961ab4<br>
 GitHub: https://github.com/akira-iguchi/FoodProfessor-Backend / https://github.com/akira-iguchi/FoodProfessor-Frontend
 
 <h2>使用技術</h2>
